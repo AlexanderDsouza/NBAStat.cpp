@@ -33,11 +33,92 @@ public:             // Access specifier
     double bpg;
 };
 
+void listStats(std::map < std::string, Player> database)
+{
+    std::string mystring;
+    std::cout << "Enter a player whos stats you'd like to know.\n";
+    std::getline(std::cin, mystring);
+    auto it = database.find(mystring);
+    if (it == database.end())
+    {
+        std::cout << "Player not found\n";
+    }
+    else
+    {
+        std::cout << "team: " << database[mystring].team << " position: " << database[mystring].pos << std::endl;
+        std::cout << "age: " << database[mystring].age << std::endl;
+        std::cout << "games played: " << database[mystring].gp << std::endl;
+        std::cout << "minutes per game: " << database[mystring].mpg << std::endl;
+        std::cout << "usage rate: " << database[mystring].usage << std::endl;
+        std::cout << "turnovers: " << database[mystring].to << std::endl;
+        std::cout << "free throw attempts: " << database[mystring].fta << std::endl;
+        std::cout << "free throw percentage: " << database[mystring].ftp << std::endl;
+        std::cout << "two-point attempts: " << database[mystring].twopa << std::endl;
+        std::cout << "two-point percentage: " << database[mystring].twopp << std::endl;
+        std::cout << "three-point attempts: " << database[mystring].threepa << std::endl;
+        std::cout << "three-point percentage: " << database[mystring].threepp << std::endl;
+        std::cout << "effective field goal percentage: " << database[mystring].eFG << std::endl;
+        std::cout << "true shooting percentage: " << database[mystring].TS << std::endl;
+        std::cout << "points per game: " << database[mystring].ppg << std::endl;
+        std::cout << "rebounds per game: " << database[mystring].rpg << std::endl;
+        std::cout << "assists per game: " << database[mystring].apg << std::endl;
+        std::cout << "steals per game: " << database[mystring].spg << std::endl;
+        std::cout << "blocks per game: " << database[mystring].bpg << std::endl << std::endl;
+
+    }
+    std::cin.clear();
+}
+
+void playerComparison(std::map<std::string, Player> database)
+{
+
+    std::string P1;
+    std::string P2;
+    while (1)
+    {
+        std::cin.clear();
+        std::cout << "Enter the first player's name\n";
+        std::getline(std::cin, P1);
+        auto it = database.find(P1);
+        if (it == database.end())
+        {
+            std::cout << "Player not found\n";
+            continue;
+        }
+        else
+            break;
+
+    }
+    while (1)
+    {
+        std::cin.clear();
+        std::cout << "Enter the second player's name\n";
+        std::getline(std::cin, P2);
+        auto it = database.find(P2);
+        if (it == database.end())
+        {
+            std::cout << "Player not found\n";
+            continue;
+        }
+        else
+            break;
+
+    }
+    if (database[P2].ppg > database[P1].ppg)
+        std::cout << P2 << " is better than " << P1 << std::endl;
+    else
+        std::cout << P1 << " is better than " << P2 << std::endl;
+
+
+
+}
+
+
 
 
 int main()
 {
-    
+
     std::ifstream in_file;
     //in_file.open("stat.txt"); playoffs
     in_file.open("regStats.txt");
@@ -56,7 +137,7 @@ int main()
             std::istringstream iss(mystring);
             int i = 0;
             std::getline(iss, data, '\t');
-            while (std::getline(iss, data, '\t')) 
+            while (std::getline(iss, data, '\t'))
             {
                 i++;
                 if (data == "\0")
@@ -126,8 +207,8 @@ int main()
                     temp.bpg = stod(data);
                     break;
                 default:
-                        break;
-      
+                    break;
+
                 }
             }
             database[Pname] = temp;
@@ -142,13 +223,12 @@ int main()
     std::string choice;
     while (1)
     {
-        mystring = "";
         choice = "";
-        std::cout << "1 for player list, 2 for specific player stats, 3 to quit\n\n";
+        std::cout << "1 for player list, 2 for specific player stats, 3 to compare two players, 4 find a player, 0 to quit\n\n";
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the input buffer
 
-        if (choice.size() > 1 || choice[0] > 51 || choice[0] < 48)
+        if (choice.size() > 1 || choice[0] > 52 || choice[0] < 48)
         {
             std::cout << "Invalid choice try again.\n\n";
             std::cin.clear();
@@ -163,43 +243,18 @@ int main()
         }
         if (choice[0] == 50)
         {
-            std::cout << "Enter a player whos states you'd like to know.\n";
-            std::getline(std::cin, mystring);
-            auto it = database.find(mystring);
-            if (it == database.end())
-            {
-                std::cout << "Player not found\n";
-            }
-            else
-            {
-                std::cout << "team: " << database[mystring].team << " position: " << database[mystring].pos << std::endl;
-                std::cout << "age: " << database[mystring].age << std::endl;
-                std::cout << "games played: " << database[mystring].gp << std::endl;
-                std::cout << "minutes per game: " << database[mystring].mpg << std::endl;
-                std::cout << "usage rate: " << database[mystring].usage << std::endl;
-                std::cout << "turnovers: " << database[mystring].to << std::endl;
-                std::cout << "free throw attempts: " << database[mystring].fta << std::endl;
-                std::cout << "free throw percentage: " << database[mystring].ftp << std::endl;
-                std::cout << "two-point attempts: " << database[mystring].twopa << std::endl;
-                std::cout << "two-point percentage: " << database[mystring].twopp << std::endl;
-                std::cout << "three-point attempts: " << database[mystring].threepa << std::endl;
-                std::cout << "three-point percentage: " << database[mystring].threepp << std::endl;
-                std::cout << "effective field goal percentage: " << database[mystring].eFG << std::endl;
-                std::cout << "true shooting percentage: " << database[mystring].TS << std::endl;
-                std::cout << "points per game: " << database[mystring].ppg << std::endl;
-                std::cout << "rebounds per game: " << database[mystring].rpg << std::endl;
-                std::cout << "assists per game: " << database[mystring].apg << std::endl;
-                std::cout << "steals per game: " << database[mystring].spg << std::endl;
-                std::cout << "blocks per game: " << database[mystring].bpg << std::endl << std::endl;
-
-            }
-            std::cin.clear();
+            listStats(database);
         }
-     
+
         if (choice[0] == 51)
+        {
+            playerComparison(database);
+        }
+
+        if (choice[0] == 48)
             break;
     }
-    
+
 
 
 }
